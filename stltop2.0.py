@@ -47,11 +47,11 @@ pgcounter = 1
 #Create a for loop that loops from when number == 1 to when number == elements
 for number in range (1 , elements+1):
     # Redefine the counter variable as number % 6. This means that we will know what element of a page the program is scraping as there are 6 elements per page.
-    counter = number % 6
+    counter = number % 9
     # If counter != 0 <==> if the last element of the page hasn't been reached and pgcounter != math.floor(elements/6+1) <==> we are not on the last page, so
     # we need to scrape 6 times, not any less as on the last page there is a 5/6 chance that there are < 6 elements, so we need to find a way to find how many
     # elements are on the last page to only scrape said elements, not more as that leads to error
-    if (counter != 0) and pgcounter != math.floor(elements/6 + 1):
+    if (counter != 0) and pgcounter != math.floor(elements/9 + 1):
             # Locate the name by xpath and store it in a variable. Note that I have formatted the XPath; this is because the XPath is correlated to the element 
             # number, so we can format the counter (which tells us which element of a page we are scraping) into the XPath to scrape the nth element.
             name = driver.find_element_by_xpath('/html/body/section[2]/div/div[4]/div[{}]/div[2]/div/div[1]/div/div/h5'.format(counter)).text
@@ -64,12 +64,12 @@ for number in range (1 , elements+1):
             
     # Else if counter == 0 <==> we are on the 6th element of the page <==> we need to go onto the next page after scraping this element. Moreover
     # pgcounter != math.floor(elements/6 + 1) <==> we are not on the last page so we don't need to worry about having < 6 elements in the page
-    elif (counter == 0) and pgcounter != math.floor(elements/6 + 1):
+    elif (counter == 0) and pgcounter != math.floor(elements/9 + 1):
             # Locate the designer's name, same as before except that this time as we are on the 6th element we don't need to format the counter 
             # as counter == 6 always
-            name = driver.find_element_by_xpath('/html/body/section[2]/div/div[4]/div[6]/div[2]/div/div[1]/div/div/h5').text
+            name = driver.find_element_by_xpath('/html/body/section[2]/div/div[4]/div[{}]/div[2]/div/div[1]/div/div/h5'.format(9)).text
             # Locate the designers' patrons with the same twist as the previous line, no formatting this time
-            patrons = [int(s) for s in driver.find_element_by_xpath('/html/body/section[2]/div/div[4]/div[6]/div[2]/div/div[1]/div/div/p').text.split() if s.isdigit()][0]
+            patrons = [int(s) for s in driver.find_element_by_xpath('/html/body/section[2]/div/div[4]/div[{}]/div[2]/div/div[1]/div/div/p'.format(9)).text.split() if s.isdigit()][0]
             # Create an array with all of the designer's info we want
             info = [date, name, patrons]
             # Append the info array containing the designer's info to the patronlist array
@@ -83,7 +83,7 @@ for number in range (1 , elements+1):
             fuckcookies
     
     # Else if pgcounter == math.floor(elements/6 + 1) <==> we are on the last page
-    elif pgcounter == math.floor(elements/6 + 1):
+    elif pgcounter == math.floor(elements/9 + 1):
             # Find the designer's name by using counter and formatting it to the XPath
             name = driver.find_element_by_xpath('/html/body/section[2]/div/div[4]/div[{}]/div[2]/div/div[1]/div/div/h5'.format(counter)).text
             # Find the designer's patron number by using counter and formatting it to the XPath
