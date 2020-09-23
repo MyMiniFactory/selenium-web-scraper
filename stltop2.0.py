@@ -97,7 +97,7 @@ for number in range (1 , elements+1):
     else:
         # Print ERROR and my contact email so I can fix the code
         print("")
-        print("ERROR contact carlos@myminifactory.com")
+        print("ERROR contact adrian@myminifactory.com")
         print("")
         # Close the driver if something goes wrong
         driver.close()
@@ -115,7 +115,7 @@ sqlite_connection = engine.connect()
 # Create an SQLite table in which today's date is shown to distinguish between days
 sqlite_table = "STLTop data {}".format(date)
 # Turn the dataframe into an SQLite file with sqlite_table as its name. It will be saved to sqlite_connection.
-df.to_sql(sqlite_table, sqlite_connection, if_exists='replace')
+df.to_sql(sqlite_table, sqlite_connection, if_exists='append')
 # Close the connection after the whole process is finished
 sqlite_connection.close()
 
